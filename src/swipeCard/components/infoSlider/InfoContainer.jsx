@@ -5,11 +5,19 @@ import InfoField from "./InfoField";
 
 const { Header, Content } = Layout;
 
-export default function InfoContainer({ animal }) {
+export default function InfoContainer({
+  translateY,
+  onTouchStart,
+  onTouchEnd,
+  onTouchMove,
+  ...animal
+}) {
   const setText = (text) => {
-    console.log(typeof text);
     if (typeof text === "boolean") {
       return text ? "Ja" : "Nee";
+    }
+    if (text === "soort" || text === "id") {
+      return;
     }
     return text;
   };
@@ -22,9 +30,13 @@ export default function InfoContainer({ animal }) {
         borderRadius: 25,
         backgroundColor: "#CABE8B",
         position: "absolute",
-        transform: "translateY(40px)",
+        transform: `translateY(${translateY}px)`,
+        transition: "transform 0.5s",
         zIndex: 10,
       }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      onTouchMove={onTouchMove}
     >
       <Layout>
         <Header
@@ -61,12 +73,14 @@ export default function InfoContainer({ animal }) {
                 marginBottom: 0,
               }}
             >
-              {info}
+              De <strong>adoptiebijdrage</strong> van een{" "}
+              <strong>{animal.soort == "Cat" ? "kat" : "hond"}</strong> bedraagt{" "}
+              <strong>{animal.soort == "Cat" ? "180" : "240"} euro.</strong>
             </Typography.Paragraph>
             <Divider style={{ backgroundColor: "white", margin: 8 }} />
           </div>
           <div>
-            {Object.keys(rest).map((key) => {
+            {Object.entries(animal).map(([key, value]) => {
               return (
                 <div
                   key={key + 99}
@@ -87,7 +101,7 @@ export default function InfoContainer({ animal }) {
                     }}
                   >
                     <InfoField text={key} />
-                    <InfoField text={setText(rest[key])} />
+                    <InfoField text={setText(value)} />
                   </div>
                   <Divider style={{ backgroundColor: "white", margin: 8 }} />
                 </div>

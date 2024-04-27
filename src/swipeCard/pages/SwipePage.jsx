@@ -26,6 +26,8 @@ export default function SwipePage() {
   const [touchStartX, setTouchStartX] = useState(0);
   const [touchEndX, setTouchEndX] = useState(0);
 
+  const [translateY, setTranslateY] = useState(916);
+
   const minSwipDistance = 50;
 
   const onTouchStart = (e) => {
@@ -47,8 +49,12 @@ export default function SwipePage() {
     const d = touchEndY - touchStartY;
     const isSwipeUp = d < -minSwipDistance;
     const isSwipeDown = d > minSwipDistance;
-    if (isSwipeUp || isSwipeDown) {
-      console.log(`Swiped ${isSwipeUp ? "up" : "down"}`);
+    if (isSwipeUp) {
+      console.log("Swiped up");
+      setTranslateY(40);
+    } else if (isSwipeDown) {
+      console.log("Swiped down");
+      setTranslateY(916);
     }
     if (!touchStartX || !touchEndX) {
       return;
@@ -101,9 +107,13 @@ export default function SwipePage() {
             Next Animal
           </button> */}
 
-          {/* <InfoContainer
-            animal={...data[currentAnimalId]}
-          /> */}
+          <InfoContainer
+            translateY={translateY}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            onTouchMove={onTouchMove}
+            {...(currentAnimal || data[currentAnimalId])}
+          />
           <ProfileImages
             animalName={currentAnimal?.naam || data[currentAnimalId].naam}
             amountOfImages={3}
