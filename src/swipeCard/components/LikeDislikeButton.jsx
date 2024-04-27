@@ -1,8 +1,8 @@
 import CatPaw from "../../globalComponents/CatPaw";
+import DogPaw from "../../globalComponents/DogPaw";
+import HumanHand from "../../globalComponents/HumanHand";
 
-export default function LikeDislikeButton({ paw, color }) {
-  console.log(paw === "cat");
-
+export default function LikeDislikeButton({ paw, color, handleClick }) {
   return (
     <div
       style={{
@@ -12,6 +12,7 @@ export default function LikeDislikeButton({ paw, color }) {
         outline: `4px solid ${color}`,
         display: "flex",
       }}
+      onClick={handleClick}
     >
       <div
         style={{
@@ -20,7 +21,9 @@ export default function LikeDislikeButton({ paw, color }) {
           margin: "auto",
         }}
       >
-        {<CatPaw color={color} />}
+        {paw === "Cat" && <CatPaw color={color} />}
+        {paw === "Dog" && <DogPaw color={color} />}
+        {paw === "Human" && <HumanHand color={color} />}
       </div>
     </div>
   );

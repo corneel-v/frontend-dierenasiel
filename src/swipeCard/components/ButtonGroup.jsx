@@ -1,6 +1,6 @@
 import LikeDislikeButton from "./LikeDislikeButton";
 
-export default function ButtonGroup({ paw }) {
+export default function ButtonGroup({ paw, handleClick }) {
   return (
     <div
       style={{
@@ -11,8 +11,8 @@ export default function ButtonGroup({ paw }) {
         margin: "auto",
       }}
     >
-      <LikeDislikeButton paw={paw} color="#71D358" />
-      <LikeDislikeButton paw={paw} color="#C1121F" />
+      <LikeDislikeButton paw={paw} color="#71D358" handleClick={handleClick} />
+      <LikeDislikeButton paw={paw} color="#C1121F" handleClick={handleClick} />
     </div>
   );
 }

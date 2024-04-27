@@ -13,52 +13,72 @@ import { UpCircleTwoTone } from "@ant-design/icons";
 const { Header, Content, Footer } = Layout;
 
 export default function SwipePage() {
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
+  const { data, isLoading, error } = useSWR("dieren", getAll);
+
+  const [currentAnimalId, setCurrentAnimalId] = useState(0);
+  const [nextAnimalId, setNextAnimalId] = useState(1);
+
+  const [currentAnimal, setCurrentAnimal] = useState(null);
+
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [touchEndY, setTouchEndY] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
 
   const minSwipDistance = 50;
 
   const onTouchStart = (e) => {
-    setTouchEnd(0);
-    setTouchStart(e.targetTouches[0].clientY);
+    setTouchEndY(0);
+    setTouchStartY(e.targetTouches[0].clientY);
+    setTouchEndX(0);
+    setTouchStartX(e.targetTouches[0].clientX);
   };
 
   const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientY);
+    setTouchEndY(e.targetTouches[0].clientY);
+    setTouchEndX(e.targetTouches[0].clientX);
   };
 
   const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) {
+    if (!touchStartY || !touchEndY) {
       return;
     }
-    const d = touchEnd - touchStart;
+    const d = touchEndY - touchStartY;
     const isSwipeUp = d < -minSwipDistance;
     const isSwipeDown = d > minSwipDistance;
     if (isSwipeUp || isSwipeDown) {
       console.log(`Swiped ${isSwipeUp ? "up" : "down"}`);
     }
+    if (!touchStartX || !touchEndX) {
+      return;
+    }
+    const dx = touchEndX - touchStartX;
+    const isSwipeRight = dx > minSwipDistance;
+    const isSwipeLeft = dx < -minSwipDistance;
+    if (isSwipeRight || isSwipeLeft) {
+      console.log(`Swiped ${isSwipeRight ? "right" : "left"}`);
+      handleNextAnimal();
+    }
   };
-
-  const [animalId, setAnimalId] = useState(1);
-
-  const { data: animalData, error } = useSWR("dieren", () =>
-    getDierById(animalId)
-  );
 
   const handleNextAnimal = () => {
-    setAnimalId(animalId + 1);
+    setCurrentAnimalId(nextAnimalId);
+    setNextAnimalId(nextAnimalId + 1);
+    if (nextAnimalId === data.length - 1) {
+      setNextAnimalId(0);
+    }
+    console.log(
+      `Current animal: ${data[currentAnimalId]} - Id: ${currentAnimalId} \n Next animal: ${data[nextAnimalId]} - Id: ${nextAnimalId}`
+    );
+    setCurrentAnimal(data[currentAnimalId]);
   };
 
-  if (!animalData) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-      onTouchMove={onTouchMove}
-    >
+    <div>
       <Layout style={{ backgroundColor: "white" }}>
         <Header
           style={{
@@ -71,25 +91,37 @@ export default function SwipePage() {
           }}
         >
           <ProfileName
-            name={"Dierenasiel Gent"}
+            name={"dierenasiel_gent"}
             transform={"translateY(34px)"}
             margin={"auto"}
           />
         </Header>
         <Content>
-          <ProfileImages animalName={animalData.naam} amountOfImages={4} />
+          {/* <ProfileImages animalName={animalData.naam} amountOfImages={4} />
           <NameCard name={animalData.naam} age={animalData.geboortedatum} />
           <button onClick={handleNextAnimal} style={{ color: "red" }}>
             Next Animal
-          </button>
-          {/* <ProfileImages animalName={"yvette"} amountOfImages={4} />
-          <NameCard name={"yvette"} age={10} />
-          <ButtonGroup paw="cat" />
-          <ProfileInfo
-            content={
-              "Yvette werd als zwerfkatje binnengebracht. Ze dachten dat ze zwanger  was, maar helaas bleek ze een zware baarmoederontsteking te hebben. Ze  is heel schuw rond mensen."
-            }
-          /> */}
+          </button> */}
+          <ProfileImages animalName={"yvette"} amountOfImages={4} />
+          <div
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            onTouchMove={onTouchMove}
+          >
+            <NameCard
+              name={currentAnimal?.naam || data[currentAnimalId].naam}
+              age={10}
+            />
+            <ButtonGroup
+              paw={currentAnimal?.soort || data[currentAnimalId].soort}
+              handleClick={handleNextAnimal}
+            />
+            <ProfileInfo
+              content={
+                currentAnimal?.opmerkingen || data[currentAnimalId].opmerkingen
+              }
+            />
+          </div>
         </Content>
         <Footer
           style={{
