@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import ProfileName from "../components/mainInfo/ProfileName";
 import ProfileImages from "../components/mainInfo/ProfileImages";
 import NameCard from "../components/mainInfo/NameCard";
@@ -10,6 +10,7 @@ import ButtonGroup from "../components/mainInfo/ButtonGroup";
 import ProfileInfo from "../components/mainInfo/ProfileInfo";
 import { UpCircleTwoTone } from "@ant-design/icons";
 import InfoContainer from "../components/infoSlider/InfoContainer";
+import { NavLink } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
@@ -91,22 +92,34 @@ export default function SwipePage() {
             height: 124,
             transform: "translateY(-50px)",
             display: "flex",
+            justifyItems: "end",
             marginBottom: "-23px",
           }}
         >
+          <NavLink to="/adoptieform">
+            <Button
+              type="primary"
+              shape="round"
+              size="large"
+              style={{
+                backgroundColor: "#CABE8B",
+                borderRadius: 25,
+                borderColor: "white",
+                marginLeft: -40,
+                marginTop: 65,
+                padding: 2,
+              }}
+            >
+              Voorkeur
+            </Button>
+          </NavLink>
           <ProfileName
             name={"dierenasiel_gent"}
             transform={"translateY(34px)"}
-            margin={"auto"}
+            width={"100vw"}
           />
         </Header>
         <Content>
-          {/* <ProfileImages animalName={animalData.naam} amountOfImages={4} />
-          <NameCard name={animalData.naam} age={animalData.geboortedatum} />
-          <button onClick={handleNextAnimal} style={{ color: "red" }}>
-            Next Animal
-          </button> */}
-
           <InfoContainer
             translateY={translateY}
             onTouchStart={onTouchStart}

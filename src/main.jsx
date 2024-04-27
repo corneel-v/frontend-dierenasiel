@@ -8,26 +8,31 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./contexts/Auth.context.jsx";
 import SwipePage from "./swipeCard/pages/SwipePage.jsx";
+import AdoptionForm from "./swipeCard/pages/AdoptionForm.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <SwipePage />,
-    // children: [
-    //   {
-    //     index: true,
-    //     element: <Login />,
-    //   },
-    //   {
-    //     path: "/",
-    //     element: <Login />,
-    //   },
-    //   {
-    //     path: "logout",
-    //     element: <Logout />,
-    //   },
-    //   { path: "*", element: <NotFound /> },
-    // ],
+    children: [
+      // {
+      //   index: true,
+      //   element: <Login />,
+      // },
+      // {
+      //   path: "/",
+      //   element: <Login />,
+      // },
+      // {
+      //   path: "logout",
+      //   element: <Logout />,
+      // },
+      // { path: "*", element: <NotFound /> },
+    ],
+  },
+  {
+    path: "/adoptieform",
+    element: <AdoptionForm />,
   },
 ]);
 

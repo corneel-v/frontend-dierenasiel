@@ -14,3 +14,13 @@ export const getDierById = async (id) => {
   return response.data;
 };
 
+export const createForm= async (userdata) => {
+  try {
+    const response = await axios.post(`${baseUrl}`, userdata);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
