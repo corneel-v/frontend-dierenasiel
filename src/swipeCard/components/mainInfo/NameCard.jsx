@@ -1,7 +1,19 @@
 import { Typography } from "antd";
 import "@fontsource/inter";
 
-export default function NameCard({ name, age }) {
+export default function NameCard({ name, birthDate }) {
+  const calculateAge = (date) => {
+    const birthDate = new Date(date);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
+  const age = calculateAge(birthDate);
   return (
     <div
       style={{
@@ -43,7 +55,7 @@ export default function NameCard({ name, age }) {
             marginBottom: 0,
           }}
         >
-          Geboorte: {age}
+          {age} jaar
         </Typography.Paragraph>
       </div>
     </div>

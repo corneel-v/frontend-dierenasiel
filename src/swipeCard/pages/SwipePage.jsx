@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Layout } from "antd";
-import ProfileName from "../components/ProfileName";
-import ProfileImages from "../components/ProfileImages";
-import NameCard from "../components/NameCard";
+import ProfileName from "../components/mainInfo/ProfileName";
+import ProfileImages from "../components/mainInfo/ProfileImages";
+import NameCard from "../components/mainInfo/NameCard";
 import { getAll, getDierById } from "../../api/dier";
 import axios from "axios";
 import useSWR from "swr";
-import ButtonGroup from "../components/ButtonGroup";
-import ProfileInfo from "../components/ProfileInfo";
+import ButtonGroup from "../components/mainInfo/ButtonGroup";
+import ProfileInfo from "../components/mainInfo/ProfileInfo";
 import { UpCircleTwoTone } from "@ant-design/icons";
+import InfoContainer from "../components/infoSlider/InfoContainer";
 
 const { Header, Content, Footer } = Layout;
 
@@ -67,9 +68,6 @@ export default function SwipePage() {
     if (nextAnimalId === data.length - 1) {
       setNextAnimalId(0);
     }
-    console.log(
-      `Current animal: ${data[currentAnimalId]} - Id: ${currentAnimalId} \n Next animal: ${data[nextAnimalId]} - Id: ${nextAnimalId}`
-    );
     setCurrentAnimal(data[currentAnimalId]);
   };
 
@@ -78,7 +76,7 @@ export default function SwipePage() {
   }
 
   return (
-    <div>
+    <div style={{ height: "100vh", overflow: "hidden" }}>
       <Layout style={{ backgroundColor: "white" }}>
         <Header
           style={{
@@ -102,7 +100,14 @@ export default function SwipePage() {
           <button onClick={handleNextAnimal} style={{ color: "red" }}>
             Next Animal
           </button> */}
-          <ProfileImages animalName={"yvette"} amountOfImages={4} />
+
+          {/* <InfoContainer
+            animal={...data[currentAnimalId]}
+          /> */}
+          <ProfileImages
+            animalName={currentAnimal?.naam || data[currentAnimalId].naam}
+            amountOfImages={3}
+          />
           <div
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
@@ -110,7 +115,10 @@ export default function SwipePage() {
           >
             <NameCard
               name={currentAnimal?.naam || data[currentAnimalId].naam}
-              age={10}
+              birthDate={
+                currentAnimal?.geboortedatum ||
+                data[currentAnimalId].geboortedatum
+              }
             />
             <ButtonGroup
               paw={currentAnimal?.soort || data[currentAnimalId].soort}

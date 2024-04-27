@@ -1,6 +1,6 @@
-import CatPaw from "../../globalComponents/CatPaw";
-import DogPaw from "../../globalComponents/DogPaw";
-import HumanHand from "../../globalComponents/HumanHand";
+import CatPaw from "../../../globalComponents/CatPaw";
+import DogPaw from "../../../globalComponents/DogPaw";
+import HumanHand from "../../../globalComponents/HumanHand";
 
 export default function LikeDislikeButton({ paw, color, handleClick }) {
   return (
