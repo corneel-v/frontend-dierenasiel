@@ -90,6 +90,7 @@ const AdoptionForm = () => {
             placeholder="User ID"
             onChange={(e) => handleChange("gebruikerid", e.target.value)}
             style={{ marginBottom: "15px" }}
+            required
           />
           <Input
             placeholder="Aantal mensen in gezin"
@@ -97,17 +98,22 @@ const AdoptionForm = () => {
               handleChange("aantalmenseningezien", e.target.value)
             }
             style={{ marginBottom: "15px" }}
+            required
           />
           <Input
             placeholder="Aantal kinderen"
             onChange={(e) => handleChange("kinderen", e.target.value)}
             style={{ marginBottom: "15px" }}
+            required
           />
           <Select
             placeholder="Heeft u andere dieren?"
             onChange={(value) => handleChange("andereDieren", value)}
             style={{ width: "100%", marginBottom: "15px" }}
+            defaultValue=""
+            required
           >
+            <Option value="">Selecteer</Option>
             <Option value="true">Ja</Option>
             <Option value="false">Nee</Option>
           </Select>
@@ -115,7 +121,10 @@ const AdoptionForm = () => {
             placeholder="Heeft u een tuin?"
             onChange={(value) => handleChange("heeftTuin", value)}
             style={{ width: "100%", marginBottom: "15px" }}
+            defaultValue=""
+            required
           >
+            <Option value="">Selecteer</Option>
             <Option value="true">Ja</Option>
             <Option value="false">Nee</Option>
           </Select>
@@ -123,7 +132,10 @@ const AdoptionForm = () => {
             placeholder="Huurder?"
             onChange={(value) => handleChange("isHuurder", value)}
             style={{ width: "100%", marginBottom: "15px" }}
+            defaultValue=""
+            required
           >
+            <Option value="">Selecteer</Option>
             <Option value="true">Ja</Option>
             <Option value="false">Nee</Option>
           </Select>
@@ -133,12 +145,16 @@ const AdoptionForm = () => {
               handleChange("tijdDierAlleenThuis", e.target.value)
             }
             style={{ marginBottom: "15px" }}
+            required
           />
           <Select
             placeholder="Reeds ervaring met dieren?"
             onChange={(value) => handleChange("heeftReedsErvaring", value)}
             style={{ width: "100%", marginBottom: "15px" }}
+            defaultValue=""
+            required
           >
+            <Option value="">Selecteer</Option>
             <Option value="true">Ja</Option>
             <Option value="false">Nee</Option>
           </Select>
@@ -146,11 +162,13 @@ const AdoptionForm = () => {
             placeholder="Uw verwachtingen"
             onChange={(e) => handleChange("verwachtingen", e.target.value)}
             style={{ marginBottom: "15px" }}
+            required
           />
           <Input
             placeholder="Voorkeuren"
             onChange={(e) => handleChange("voorkeuren", e.target.value)}
             style={{ marginBottom: "15px" }}
+            required
           />
           <Button
             type="primary"
