@@ -44,7 +44,7 @@ export default function NameCard({ name, age }) {
             marginBottom: 0,
           }}
         >
-          {age} jaar
+          Geboorte: {age}
         </Typography.Paragraph>
       </div>
     </div>
