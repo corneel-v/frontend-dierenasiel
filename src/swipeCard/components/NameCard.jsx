@@ -5,9 +5,9 @@ export default function NameCard({ name, age }) {
   return (
     <div
       style={{
-        width: 300,
+        width: 250,
         height: 107,
-        transform: "translateX(-75px) translateY(-85px)",
+        transform: "translateX(-55px) translateY(-85px)",
         borderRadius: 25,
         backgroundColor: "#CABE8B",
         display: "flex",
@@ -21,7 +21,6 @@ export default function NameCard({ name, age }) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          transform: "translateX(-25px)",
         }}
       >
         <Typography.Title
